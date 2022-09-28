@@ -6,46 +6,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+
+
+
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-
-    <div id="axios_app">
-        <div>
-            {{ message }}
-        </div>
-        <div>
-            {{ mountedMessage }}
-        </div>
-        <div>
-            <ol>
-                <user-item v-for="user in userList" v-bind:user="user" v-bind:key="user.id"></user-item>
-            </ol>
-        </div>
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>email</th>
-                        <th>phone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="user in userList">
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phone }}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <main class="container">
+        <div id="axios_app">
             <button v-on:click="addRow">add row</button>
+            <hr>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>email</th>
+                            <th>phone</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>email</th>
+                            <th>phone</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr v-for="user in userList">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </main>
 
     <script>
 
@@ -76,7 +79,7 @@
             methods: {
                 addRow(event) {
                     this.userList.push({
-                        id: this.userList[this.userList.length-1].id+1,
+                        id: this.userList[this.userList.length - 1].id + 1,
                         name: "hogehoge",
                         email: "hogehoge@gmail.com",
                         phone: "xxx-xxxx-xxxx",
