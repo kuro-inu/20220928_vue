@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <div id="axios_app">
+        <div>
+            {{ message }}
+        </div>
+        <div>
+            {{ mountedMessage }}
+        </div>
+        <div>
+            <ol>
+                <user-item v-for="user in userList" v-bind:user="user" v-bind:key="user.id"></user-item>
+            </ol>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>email</th>
+                        <th>phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="user in userList">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button v-on:click="addRow">add row</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        const UserItem = {
+            props: ["user"],
+            template: `<li>{{ user.id }} / {{ user.name }}</li>`,
+        }
+
+
+        const axiosApp = {
+            data() {
+                return {
+                    message: "Hello Axios!!",
+                    mountedMessage: "",
+                    userList: [],
+                }
+            },
+            components: {
+                UserItem,
+            },
+            mounted() {
+                this.mountedMessage = "mounted!!";
+
+                axios.get("https://jsonplaceholder.typicode.com/users")
+                    .then(response => this.userList = response.data)
+                    .catch(error => console.log(error));
+            },
+            methods: {
+                addRow(event) {
+                    this.userList.push({
+                        id: this.userList[this.userList.length-1].id+1,
+                        name: "hogehoge",
+                        email: "hogehoge@gmail.com",
+                        phone: "xxx-xxxx-xxxx",
+                    });
+                },
+            }
+        }
+        Vue.createApp(axiosApp).mount("#axios_app");
+    </script>
+</body>
+
+</html>
